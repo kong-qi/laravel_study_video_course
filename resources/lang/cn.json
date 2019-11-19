@@ -1,0 +1,18 @@
+{
+    "Register":"注册",
+    "Login":"登录",
+    "Logout":"退出",
+    "Toggle navigation":"展开",
+    "Forgot Your Password?":"忘记密码？",
+    "Remember Me":"记住我",
+    "Password":"密码",
+    "E-Mail Address":"邮箱",
+    "Name":"账号",
+    "Confirm Password":"确认密码",
+    "Dashboard":"面板",
+    "You are logged in!":"你已登录",
+    "Please confirm your password before continuing.":"请在继续之前确认您的密码。",
+    "Reset Password":"重设密码",
+    "Send Password Reset Link":"发送邮箱重设密码"
+
+}

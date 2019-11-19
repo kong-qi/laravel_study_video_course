@@ -16,4 +16,9 @@ Route::get('/', 'IndexController@index')->name('index');
 Route::post('post/', 'IndexController@post')->name('post');
 
 Route::get('/db', 'DbController@index')->name('db');
+Route::get('/home', 'IndexController@home')->name('home');
+
+Auth::routes();
+
+
 

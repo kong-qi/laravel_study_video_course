@@ -65,6 +65,9 @@ class IndexController extends Controller
     public function message(){
 
     }
+    public function home(){
+        return view('home');
+    }
 
 
 }
