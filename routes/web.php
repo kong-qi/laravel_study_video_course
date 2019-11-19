@@ -25,3 +25,6 @@ Auth::routes();
 Route::get('/mail', 'MailController@index')->name('mail');
 
 Route::get('/job', 'JobController@index')->name('job');
+
+
+Route::resource('article','ArticleController');
