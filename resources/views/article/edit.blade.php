@@ -1,4 +1,4 @@
-@extends('layouts.bootstrap')
+@extends('layouts.app')
 @section('content')
     <div class="container">
         <h3>编辑</h3>
@@ -22,36 +22,37 @@
             <input type="hidden" name="_method" value="put">
 
             <table class="table table-bordered">
-            <tr>
+                <tr>
 
-                <td>标题</td>
-                <td><input type="text" name="name" value="{{ old('name')?:$show->name }}" class="form-control" placeholder="请输入标题"/></td>
+                    <td>标题</td>
+                    <td><input type="text" name="name" value="{{ old('name')?:$show->name }}" class="form-control"
+                               placeholder="请输入标题"/></td>
 
-            </tr>
-            <tr>
+                </tr>
+                <tr>
 
-                <td>作者</td>
-                <td>
-                    <select name="author" id="" class="form-control">
-                        <option value="小明" {{ $show->author=='小明'?'selected':'' }}>小明</option>
-                        <option value="小八" {{ $show->author=='小八'?'selected':'' }}>小八</option>
-                        <option value="猪骨" {{ $show->author=='猪骨'?'selected':'' }}>猪骨</option>
-                    </select>
-                </td>
+                    <td>tags标签，','分割，一个分割一个</td>
+                    <td><textarea name="tags" placeholder="请输入tags" id="" cols="30" rows="5"
+                                  class="form-control">{{ implode(',',$show->tags()->pluck('name')->toArray()) }}</textarea></td>
 
-            </tr>
-            <tr>
+                </tr>
 
-                <td>内容</td>
-                <td><textarea name="content" placeholder="请输入正文" id="" cols="30" rows="10" class="form-control">{{ old('content')?:$show->content }}</textarea></td>
 
-            </tr>
-            <tr>
-                <td colspan="2"><button type="submit" class="btn btn-primary">更新</button></td>
+                <tr>
 
-            </tr>
+                    <td>内容</td>
+                    <td><textarea name="content" placeholder="请输入正文" id="" cols="30" rows="10"
+                                  class="form-control">{{ old('content')?:$show->content }}</textarea></td>
 
-        </table>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <button type="submit" class="btn btn-primary">更新</button>
+                    </td>
+
+                </tr>
+
+            </table>
         </form>
     </div>
 @endsection

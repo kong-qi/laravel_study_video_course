@@ -3,12 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use App\Models\Comment;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 
 class ArticleController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['index','show']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -19,8 +26,9 @@ class ArticleController extends Controller
         //
         //DB::table('articles')->truncate();;
 
-        $list = Article::paginate(10);
+        $list = Article::where('user_id',$this->getUserId())->paginate(10);
         $pagers = $list->links();
+
         return view('article.index', ['data' => $list, 'pager' => $pagers]);
     }
 
@@ -46,16 +54,19 @@ class ArticleController extends Controller
         //
         $rule = [
             'name' => 'required',
-            'author' => 'required',
             'content' => 'required'
         ];
         $this->validate($request, $rule);
         $model = new Article();
         $model->name = $request->input('name');
-        $model->author = $request->input('author');
+        $model->author = $this->getUser('name');
+        $model->user_id=$this->getUser('id');
         $model->content = $request->input('content');
+
         $r = $model->save();
         if ($r) {
+            //添加tags
+            Tag::add($request->input('tags'),$model->id,'article');
             $data = [
                 'status' => ['code' => '200', 'msg' => '添加成功']
             ];
@@ -67,6 +78,7 @@ class ArticleController extends Controller
         return redirect()->route('article.index')->with($data);
     }
 
+
     /**
      * Display the specified resource.
      *
@@ -75,7 +87,15 @@ class ArticleController extends Controller
      */
     public function show($id)
     {
-        return view('article.show', ['show' => Article::find($id)]);
+        $artilce=Article::find($id);
+        $list = $artilce->comments()->with('user')->paginate(1);
+        $pagers = $list->links();
+        $data=[
+            'show' => $artilce,
+            'list'=>$list,
+            'pager'=>$pagers
+        ];
+        return view('article.show', $data);
     }
 
     /**
@@ -86,7 +106,9 @@ class ArticleController extends Controller
      */
     public function edit($id)
     {
-        return view('article.edit', ['show' => Article::find($id)]);
+        $article=Article::find($id);
+        Gate::authorize('self_article', $article);
+        return view('article.edit', ['show' => $article]);
     }
 
     /**
@@ -98,18 +120,21 @@ class ArticleController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $article=Article::find($id);
+        Gate::authorize('self_article', $article);
         $rule = [
             'name' => 'required',
-            'author' => 'required',
             'content' => 'required'
         ];
         $this->validate($request, $rule);
         $model =  Article::find($id);
         $model->name = $request->input('name');
-        $model->author = $request->input('author');
+
         $model->content = $request->input('content');
         $r = $model->save();
         if ($r) {
+            //更新tags
+            Tag::add($request->input('tags'),$model->id,'article');
             $data = [
                 'status' => ['code' => '200', 'msg' => '编辑成功']
             ];
@@ -129,6 +154,8 @@ class ArticleController extends Controller
      */
     public function destroy($id)
     {
+        $article=Article::find($id);
+        Gate::authorize('self_article', $article);
         $r=Article::find($id)->delete();
         if ($r) {
             $data = [

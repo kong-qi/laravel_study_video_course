@@ -7,13 +7,11 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ $title ?? '博客' }}</title>
 
-    <!-- Scripts -->
-    <link rel="stylesheet" href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css">
-    <script src="https://cdn.bootcss.com/jquery/3.4.0/jquery.min.js"></script>
-    <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="{{ asset('/static/css/bootstrap.min.css') }}">
+    <script src="{{ asset('static/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('static/js/bootstrap.bundle.min.js') }}"></script>
 </head>
 <body>
 <div id="app">
@@ -54,6 +52,7 @@
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item"  href="{{ route('article.index') }}">文章管理</a>
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                    onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -76,5 +75,9 @@
         @yield('content')
     </main>
 </div>
+@include('layouts.footer')
+<script>
+    $('[data-toggle="tooltip"]').tooltip()
+</script>
 </body>
 </html>

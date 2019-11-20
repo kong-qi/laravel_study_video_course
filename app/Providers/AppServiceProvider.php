@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -24,11 +25,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
-       /* View::composer('*',function($view){
-            //echo '合成器demo输出';
-            $view->with(['name'=>'name']);
-        });*/
-        //View::share(['name'=>'全局share name']);
+        Relation::morphMap([
+            'article' => 'App\Models\Article'
+
+        ]);
     }
 }

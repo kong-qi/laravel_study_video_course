@@ -11,22 +11,17 @@
 |
 */
 
-Route::get('/', 'IndexController@index')->name('index');
+/*Route::get('/', 'IndexController@index')->name('index');
 
 Route::post('post/', 'IndexController@post')->name('post');
 
 Route::get('/db', 'DbController@index')->name('db');
-Route::get('/home', 'IndexController@home')->name('home');
+Route::get('/home', 'IndexController@home')->name('home');*/
 
 Auth::routes();
 
-
-
-Route::get('/mail', 'MailController@index')->name('mail');
-
-Route::get('/job', 'JobController@index')->name('job');
-
+Route::get('/', 'IndexController@index')->name('index');
 
 Route::resource('article','ArticleController');
 
-Route::get('/orm', 'OrmController@index')->name('orm');
+Route::post('/comment/create', 'CommentController@store')->middleware('auth')->name('comment.store');

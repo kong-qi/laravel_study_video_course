@@ -1,4 +1,4 @@
-@extends('layouts.bootstrap')
+@extends('layouts.app')
 @section('content')
     <div class="container">
         <h3>列表</h3>

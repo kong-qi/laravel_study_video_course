@@ -1,4 +1,4 @@
-@extends('layouts.bootstrap')
+@extends('layouts.app')
 @section('content')
     <div class="container">
         <h3>添加</h3>
@@ -21,35 +21,34 @@
             @csrf
 
             <table class="table table-bordered">
-            <tr>
+                <tr>
 
-                <td>标题</td>
-                <td><input type="text" name="name" class="form-control" placeholder="请输入标题"/></td>
+                    <td>标题</td>
+                    <td><input type="text" name="name" class="form-control" placeholder="请输入标题"/></td>
 
-            </tr>
-            <tr>
+                </tr>
+                <tr>
 
-                <td>作者</td>
-                <td>
-                    <select name="author" id="" class="form-control">
-                        <option value="小明">小明</option>
-                        <option value="小八">小八</option>
-                        <option value="猪骨">猪骨</option>
-                    </select>
-                </td>
+                    <td>tags标签，','分割，一个分割一个</td>
+                    <td><textarea name="tags" placeholder="请输入tags" id="" cols="30" rows="5"
+                                  class="form-control"></textarea></td>
 
-            </tr>
-            <tr>
+                </tr>
 
-                <td>内容</td>
-                <td><textarea name="content" placeholder="请输入正文" id="" cols="30" rows="10" class="form-control"></textarea></td>
+                <tr>
 
-            </tr>
-            <tr>
-                <td colspan="2"><button type="submit" class="btn btn-primary">提交</button></td>
-            </tr>
+                    <td>内容</td>
+                    <td><textarea name="content" placeholder="请输入正文" id="" cols="30" rows="10"
+                                  class="form-control"></textarea></td>
 
-        </table>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <button type="submit" class="btn btn-primary">提交</button>
+                    </td>
+                </tr>
+
+            </table>
         </form>
     </div>
 @endsection
