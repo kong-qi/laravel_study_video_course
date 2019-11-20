@@ -28,3 +28,5 @@ Route::get('/job', 'JobController@index')->name('job');
 
 
 Route::resource('article','ArticleController');
+
+Route::get('/orm', 'OrmController@index')->name('orm');
